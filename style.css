@@ -185,3 +185,61 @@ footer a:hover {
     text-decoration: underline;
 }
 
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f4f4;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #1e1e2f;
+}
+
+.logo {
+  color: #fff;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #ddd;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #fff;
+}
+
+.login {
+  color: #4da3ff;
+}
+
+.signup {
+  padding: 6px 12px;
+  background-color: #4da3ff;
+  color: #fff !important;
+  border-radius: 4px;
+}
+
+.signup:hover {
+  background-color: #1f7ae0;
+}
+
