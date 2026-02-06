@@ -7,48 +7,70 @@
 </head>
 <body>
 
-        
-    <main>
-        <section class="form-container">
-            <!-- Login Form -->
-            <div id="login-form">
-                <h2>Login</h2>
-                <form>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required placeholder="Enter your email">
-                    
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required placeholder="Enter your password">
-                    
-                    <button type="submit">Login</button>
-                </form>
-                <p class="switch-form">Don't have an account? <a href="javascript:void(0);" onclick="toggleForm()">Sign up</a></p>
-            </div>
+    <div id="login-form">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label>Email:</label>
+        <input type="email" required>
 
-            <!-- Signup Form -->
-            <div id="signup-form" style="display: none;">
-                <h2>Sign Up</h2>
-                <form>
-                    <label for="fullname">Full Name:</label>
-                    <input type="text" id="fullname" name="fullname" required placeholder="Enter your full name">
+        <label>Password:</label>
+        <input type="password" required>
 
-                    <label for="signup-email">Email:</label>
-                    <input type="email" id="signup-email" name="signup-email" required placeholder="Enter your email">
+        <button type="submit">Login</button>
+    </form>
 
-                    <label for="signup-password">Password:</label>
-                    <input type="password" id="signup-password" name="signup-password" required placeholder="Create a password">
+    <p class="switch-form">
+        Don’t have an account?
+        <a href="#" onclick="showSignup()">Sign up</a>
+    </p>
+</div>
 
-                    <label for="confirmpassword">Confirm Password:</label>
-                    <input type="password" id="confirmpassword" name="confirmpassword" required placeholder="Confirm your password">
-                    
-                    <button type="submit">Create Account</button>
-                </form>
-                <p class="switch-form">Already have an account? <a href="javascript:void(0);" onclick="toggleForm()">Login</a></p>
-            </div>
-        </section>
-    </main>
+<div id="signup-form" style="display: none;">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+        <label>Full Name:</label>
+        <input type="text" required>
 
+        <label>Email:</label>
+        <input type="email" required>
 
+        <label>Password:</label>
+        <input type="password" required>
 
-</body>
-</html>
+        <label>Confirm Password:</label>
+        <input type="password" required>
+
+        <button type="submit">Create Account</button>
+    </form>
+
+    <p class="switch-form">
+        Already have an account?
+        <a href="#" onclick="showLogin()">Login</a>
+    </p>
+</div>
+
+<script>
+  function showSignup() {
+    document.getElementById("login-form").style.display = "none";
+    document.getElementById("signup-form").style.display = "block";
+  }
+
+  function showLogin() {
+    document.getElementById("signup-form").style.display = "none";
+    document.getElementById("login-form").style.display = "block";
+  }
+
+  // Redirect login to home page
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent actual form submission
+    // Here you could add validation if needed
+    window.location.href = "index.html"; // Redirect to home page
+  });
+
+  // Optional: After signup, redirect to login page
+  document.getElementById("signupForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("Account created successfully! Please log in.");
+    showLogin();
+  });
+</script>
