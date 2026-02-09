@@ -7,45 +7,78 @@
 </head>
 <body>
 
+  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">NEONPULSE</div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
+      <li><a href="settings.html">Settings</a></li>
       <li><a href="login.html">Logout</a></li>
     </ul>
   </nav>
 
-  <main class="features">
+  <!-- MAIN PROFILE CONTAINER -->
+  <main class="profile-container">
+
     <h2>User Profile</h2>
 
-    <div class="card" style="max-width: 500px; margin: 0 auto;">
-      <img src="https://via.placeholder.com/120"
-           alt="Profile Avatar"
-           style="border-radius: 50%; margin-bottom: 15px;">
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
 
-      <h3>Jim Roedil Pacatang</h3>
-      <p>Email: jim@example.com</p>
-      <p>Address: Cebu City, Philippines</p>
+      <!-- AVATAR AND BASIC INFO -->
+      <div class="profile-header">
+        <img src="default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg" alt="Profile Avatar">
+        <div class="basic-info">
+          <h3>Jim Roedil Pacatang</h3>
+          <p class="email">jimroedilpacatang@gmail.com</p>
+          <p class="location">Maribojoc, Bohol, Philippines</p>
+        </div>
+      </div>
 
-      <hr style="margin: 20px 0; border-color: #333;">
+      <hr>
 
-      <h4>About Me</h4>
-      <p>
-        Digital creator passionate about futuristic UI,
-        cyberpunk design, and clean web interfaces.
-      </p>
+      <!-- ABOUT SECTION -->
+      <section class="profile-section">
+        <h4>About Me</h4>
+        <p>
+          Digital creator passionate about futuristic UI, cyberpunk design, and clean web interfaces.
+        </p>
+      </section>
 
-      <br>
+      <!-- CONTACT INFO SECTION -->
+      <section class="profile-section">
+        <h4>Contact Info</h4>
+        <ul>
+          <li>Email: jimroedilpacatang@gmail.com</li>
+          <li>Phone: +63 963 488 8271</li>
+          <li>Address: Maribojoc, Bohol, Philippines</li>
+        </ul>
+      </section>
 
-      <a href="settings.html" class="cta-btn" style="display:inline-block;">
-        Go to Settings
-      </a>
+      <!-- SOCIAL LINKS SECTION -->
+      <section class="profile-section">
+        <h4>Social Links</h4>
+        <ul class="social-links">
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">GitHub</a></li>
+        </ul>
+      </section>
+
+      <!-- EDIT BUTTON -->
+      <div class="edit-btn-container">
+        <a href="settings.html" class="edit-btn">Edit Profile</a>
+      </div>
+
     </div>
+
   </main>
 
+  <!-- FOOTER -->
   <footer>
     <p>© 2026 NEONPULSE</p>
   </footer>
 
 </body>
 </html>
+
