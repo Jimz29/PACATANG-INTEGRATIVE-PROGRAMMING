@@ -17,42 +17,53 @@
   <main class="settings-container">
     <h2>Settings</h2>
 
+    <!-- WRAP EVERYTHING INSIDE A FORM -->
+    <form id="settingsForm">
+
     <!-- PROFILE SECTION -->
     <section class="settings-section">
       <h3>Profile</h3>
+
       <div class="form-group">
         <label>Profile Picture</label>
         <input type="file" accept="image/*">
       </div>
+
       <div class="form-group">
         <label>Full Name</label>
-        <input type="text" placeholder="Your full name">
+        <input type="text" id="settingsName" placeholder="Your full name">
       </div>
+
       <div class="form-group">
         <label>Username</label>
-        <input type="text" placeholder="Your username">
+        <input type="text" id="settingsUsername" placeholder="Your username">
       </div>
+
       <div class="form-group">
         <label>Email</label>
-        <input type="email" placeholder="you@example.com">
+        <input type="email" id="settingsEmail" placeholder="you@example.com">
       </div>
+
       <div class="form-group">
         <label>Phone Number</label>
-        <input type="tel" placeholder="+639-736-562-063">
+        <input type="tel" id="settingsPhone" placeholder="+639-736-562-063">
       </div>
     </section>
 
     <!-- SECURITY SECTION -->
     <section class="settings-section">
       <h3>Security</h3>
+
       <div class="form-group">
         <label>Change Password</label>
-        <input type="password" placeholder="New password">
+        <input type="password" id="settingsPassword" placeholder="New password">
       </div>
+
       <div class="form-group">
         <label>Confirm Password</label>
-        <input type="password" placeholder="Confirm new password">
+        <input type="password" id="settingsConfirmPassword" placeholder="Confirm new password">
       </div>
+
       <div class="form-group checkbox-group">
         <input type="checkbox" id="twoFactor">
         <label for="twoFactor">Enable Two-Factor Authentication</label>
@@ -62,31 +73,42 @@
     <!-- PREFERENCES SECTION -->
     <section class="settings-section">
       <h3>Preferences</h3>
+
       <div class="form-group">
         <label>Theme</label>
-        <select>
+        <select id="settingsTheme">
           <option>Dark</option>
           <option>Light</option>
           <option>Neon</option>
         </select>
       </div>
+
       <div class="form-group checkbox-group">
         <input type="checkbox" id="emailNotifications" checked>
         <label for="emailNotifications">Enable Email Notifications</label>
       </div>
+
       <div class="form-group checkbox-group">
         <input type="checkbox" id="appNotifications" checked>
         <label for="appNotifications">Enable App Notifications</label>
       </div>
     </section>
 
-    <button class="save-btn" type="button">Save All Changes</button>
+    <!-- ERROR MESSAGE -->
+    <p id="settingsError" class="error-message"></p>
 
+    <button class="save-btn" type="submit">Save All Changes</button>
+
+    </form>
   </main>
 
   <footer>
     <p>© 2026 NEONPULSE</p>
   </footer>
 
+  <!-- LINK TO SCRIPT -->
+  <script src="script.js"></script>
+
 </body>
 </html>
+

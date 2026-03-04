@@ -2,75 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>NEONPULSE</title>
+  <title>NEONPULSE Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="login-form">
-    <h2>Login</h2>
-    <form id="loginForm">
-        <label>Email:</label>
-        <input type="email" required>
+<div id="login-form">
+  <h2>Login</h2>
+  <form id="loginForm">
+      <label>Email:</label>
+      <input type="email" id="loginEmail" required>
 
-        <label>Password:</label>
-        <input type="password" required>
+      <label>Password:</label>
+      <input type="password" id="loginPassword" required>
 
-        <button type="submit">Login</button>
-    </form>
+      <button type="submit">Login</button>
+  </form>
 
-    <p class="switch-form">
-        Don’t have an account?
-        <a href="#" onclick="showSignup()">Sign up</a>
-    </p>
+  <p class="switch-form">
+      Don’t have an account? <a href="#" onclick="showSignup()">Sign up</a>
+  </p>
 </div>
 
 <div id="signup-form" style="display: none;">
-    <h2>Sign Up</h2>
-    <form id="signupForm">
-        <label>Full Name:</label>
-        <input type="text" required>
+  <h2>Sign Up</h2>
+  <form id="signupForm">
+      <label>Full Name:</label>
+      <input type="text" id="signupName" required>
 
-        <label>Email:</label>
-        <input type="email" required>
+      <label>Email:</label>
+      <input type="email" id="signupEmail" required>
 
-        <label>Password:</label>
-        <input type="password" required>
+      <label>Phone Number:</label>
+      <input type="tel" id="signupPhone" placeholder="+639XXXXXXXXX" required>
 
-        <label>Confirm Password:</label>
-        <input type="password" required>
+      <label>Password:</label>
+      <input type="password" id="signupPassword" required>
 
-        <button type="submit">Create Account</button>
-    </form>
+      <label>Confirm Password:</label>
+      <input type="password" id="signupConfirmPassword" required>
 
-    <p class="switch-form">
-        Already have an account?
-        <a href="#" onclick="showLogin()">Login</a>
-    </p>
+      <button type="submit">Create Account</button>
+  </form>
+
+  <p class="switch-form">
+      Already have an account? <a href="#" onclick="showLogin()">Login</a>
+  </p>
 </div>
 
-<script>
-  function showSignup() {
-    document.getElementById("login-form").style.display = "none";
-    document.getElementById("signup-form").style.display = "block";
-  }
+<script src="script.js"></script>
 
-  function showLogin() {
-    document.getElementById("signup-form").style.display = "none";
-    document.getElementById("login-form").style.display = "block";
-  }
+</body>
+</html>
 
-  // Redirect login to home page
-  document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault(); // Prevent actual form submission
-    // Here you could add validation if needed
-    window.location.href = "index.html"; // Redirect to home page
-  });
-
-  // Optional: After signup, redirect to login page
-  document.getElementById("signupForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    alert("Account created successfully! Please log in.");
-    showLogin();
-  });
-</script>
