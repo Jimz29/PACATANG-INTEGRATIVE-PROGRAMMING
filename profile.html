@@ -33,6 +33,20 @@
       <h4>About Me</h4>
       <p>Welcome to your profile page!</p>
     </section>
+
+    <!-- Back to Home Button -->
+    <div style="text-align:center; margin-top:20px;">
+      <button onclick="goHome()" style="
+        padding:10px 20px;
+        background: linear-gradient(90deg, #00ffe7, #ff00ff);
+        color: #111;
+        font-weight:bold;
+        border:none;
+        border-radius:8px;
+        cursor:pointer;
+      ">Back to Home</button>
+    </div>
+
   </div>
 </main>
 
@@ -56,8 +70,12 @@
   function logout() {
     window.location.href = "login.html";
   }
+
+  // Back to Home
+  function goHome() {
+    window.location.href = "index.html";
+  }
 </script>
 
 </body>
 </html>
-

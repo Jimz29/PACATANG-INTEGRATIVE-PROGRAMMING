@@ -1,11 +1,12 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEONPULSE</title>
+  <title>NEONPULSE Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <!-- NAVBAR -->
@@ -13,44 +14,55 @@
     <div class="logo">NEONPULSE</div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="#features">About</a></li>
-      <li><a href="login.html" class="login">Login</a></li>
-      <li><a href="settings.html" class="signup">Settings</a></li>
     </ul>
   </nav>
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <h1>NEONPULSE</h1>
-    <p>The future interface for digital creators and innovators.</p>
-    <button class="cta-btn">Enter the Future</button>
-  </section>
+  <!-- LOGIN FORM -->
+  <div id="login-form">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label>Email:</label>
+      <input type="email" id="loginEmail" required>
 
-  <!-- FEATURES / ABOUT SECTION -->
-  <section id="features" class="features">
-    <h2>Why NEONPULSE?</h2>
-    <div class="feature-grid">
-      <div class="card">
-        <h3>Futuristic Design</h3>
-        <p>Inspired by cyberpunk visuals and next-gen UI concepts.</p>
-      </div>
-      <div class="card">
-        <h3>Creator Focused</h3>
-        <p>Built for designers, developers, and digital visionaries.</p>
-      </div>
-      <div class="card">
-        <h3>Simple & Clean</h3>
-        <p>Minimal layout that highlights content without distractions.</p>
-      </div>
-    </div>
-  </section>
+      <label>Password:</label>
+      <input type="password" id="loginPassword" required>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 NEONPULSE | Created by Jim Roedil Pacatang</p>
-    <a href="index.html">Back to Landing Page</a>
-  </footer>
+      <button type="submit">Login</button>
+    </form>
+
+    <p class="switch-form">
+      Don’t have an account? <a href="#" onclick="showSignup()">Sign up</a>
+    </p>
+  </div>
+
+  <!-- SIGNUP FORM -->
+  <div id="signup-form" style="display: none;">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+      <label>Full Name:</label>
+      <input type="text" id="signupName" required>
+
+      <label>Email:</label>
+      <input type="email" id="signupEmail" required>
+
+      <label>Phone Number:</label>
+      <input type="tel" id="signupPhone" placeholder="+639XXXXXXXXX" required>
+
+      <label>Password:</label>
+      <input type="password" id="signupPassword" required>
+
+      <label>Confirm Password:</label>
+      <input type="password" id="signupConfirmPassword" required>
+
+      <button type="submit">Create Account</button>
+    </form>
+
+    <p class="switch-form">
+      Already have an account? <a href="#" onclick="showLogin()">Login</a>
+    </p>
+  </div>
+
+  <script src="script.js"></script>
 
 </body>
 </html>
-
