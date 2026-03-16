@@ -746,3 +746,240 @@ border-radius:6px;
 font-weight:bold;
 cursor:pointer;
 }
+
+/* ========================
+   API EXPLORER PAGE STYLES
+   ======================== */
+
+.api-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 0 40px #00ffe7aa;
+}
+
+.api-description {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #f0f0f0;
+  font-size: 1.1rem;
+}
+
+/* ========================
+   SEARCH SECTION
+   ======================== */
+
+.search-section {
+  margin-bottom: 2rem;
+}
+
+.search-box {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 300px;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background-color: #111;
+  color: #f0f0f0;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #00ffe7;
+  box-shadow: 0 0 10px #00ffe7aa;
+}
+
+.search-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(90deg, #00ffe7, #ff00ff);
+  border: none;
+  border-radius: 8px;
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffe7;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  background-color: #111;
+  border: 1px solid #333;
+  border-radius: 20px;
+  color: #f0f0f0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  border-color: #00ffe7;
+  color: #00ffe7;
+  box-shadow: 0 0 10px #00ffe7aa;
+}
+
+.filter-btn.active {
+  background: linear-gradient(90deg, #00ffe7, #ff00ff);
+  color: #111;
+  border: none;
+  font-weight: bold;
+}
+
+/* ========================
+   LOADING SPINNER
+   ======================== */
+
+.loading-spinner {
+  text-align: center;
+  padding: 2rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #333;
+  border-top: 3px solid #00ffe7;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ========================
+   RESULTS GRID
+   ======================== */
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.country-card {
+  background-color: #111;
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1px solid #333;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease;
+}
+
+.country-card:hover {
+  transform: translateY(-5px);
+  border-color: #00ffe7;
+  box-shadow: 0 0 20px #00ffe7aa;
+}
+
+.country-flag {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 2px solid #333;
+}
+
+.country-name {
+  font-size: 1.5rem;
+  color: #00ffe7;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 8px #00ffe7aa;
+}
+
+.country-detail {
+  margin: 0.5rem 0;
+  color: #f0f0f0;
+  font-size: 0.95rem;
+}
+
+.country-detail strong {
+  color: #ff00ff;
+  margin-right: 0.5rem;
+}
+
+/* ========================
+   ERROR & NO RESULTS
+   ======================== */
+
+.error-message {
+  background-color: #330000;
+  border: 1px solid #ff0066;
+  color: #ff9999;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: #888;
+  font-size: 1.2rem;
+}
+
+/* ========================
+   ANIMATIONS
+   ======================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================
+   RESPONSIVE DESIGN
+   ======================== */
+
+@media (max-width: 768px) {
+  .api-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .search-box {
+    flex-direction: column;
+  }
+
+  .search-input {
+    min-width: auto;
+  }
+
+  .filter-buttons {
+    justify-content: flex-start;
+  }
+}
