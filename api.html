@@ -3,338 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Country Explorer | NEONPULSE API</title>
-  <style>
-    /* ========================
-       GENERAL STYLES (from style.css)
-       ======================== */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: #0d0d0d;
-      color: #f0f0f0;
-      line-height: 1.6;
-    }
-
-    a {
-      color: #00ffe7;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    a:hover {
-      color: #ff00ff;
-    }
-
-    /* ========================
-       NAVBAR (from style.css)
-       ======================== */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #111;
-      padding: 1rem 2rem;
-      border-bottom: 2px solid #00ffe7;
-      box-shadow: 0 0 20px #00ffe733;
-    }
-
-    .navbar .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #00ffe7;
-      text-shadow: 0 0 10px #00ffe7;
-    }
-
-    .navbar .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    /* ========================
-       FOOTER (from style.css)
-       ======================== */
-    footer {
-      text-align: center;
-      padding: 1rem 0;
-      margin-top: 2rem;
-      border-top: 1px solid #333;
-      color: #888;
-      font-size: 0.9rem;
-    }
-
-    /* ========================
-       PAGE TITLE (from style.css)
-       ======================== */
-    .page-title {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #ff00ff;
-    }
-
-    /* ========================
-       API EXPLORER PAGE STYLES
-       ======================== */
-    .api-container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background-color: #1a1a1a;
-      border-radius: 12px;
-      box-shadow: 0 0 40px #00ffe7aa;
-    }
-
-    .api-description {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #f0f0f0;
-      font-size: 1.1rem;
-    }
-
-    /* ========================
-       SEARCH SECTION
-       ======================== */
-    .search-section {
-      margin-bottom: 2rem;
-    }
-
-    .search-box {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .search-input {
-      flex: 1;
-      min-width: 300px;
-      padding: 1rem;
-      border-radius: 8px;
-      border: 1px solid #333;
-      background-color: #111;
-      color: #f0f0f0;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-
-    .search-input:focus {
-      outline: none;
-      border-color: #00ffe7;
-      box-shadow: 0 0 10px #00ffe7aa;
-    }
-
-    .search-btn {
-      padding: 1rem 2rem;
-      background: linear-gradient(90deg, #00ffe7, #ff00ff);
-      border: none;
-      border-radius: 8px;
-      color: #111;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .search-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffe7;
-    }
-
-    .filter-buttons {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 1rem;
-    }
-
-    .filter-btn {
-      padding: 0.5rem 1rem;
-      background-color: #111;
-      border: 1px solid #333;
-      border-radius: 20px;
-      color: #f0f0f0;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .filter-btn:hover {
-      border-color: #00ffe7;
-      color: #00ffe7;
-      box-shadow: 0 0 10px #00ffe7aa;
-    }
-
-    .filter-btn.active {
-      background: linear-gradient(90deg, #00ffe7, #ff00ff);
-      color: #111;
-      border: none;
-      font-weight: bold;
-    }
-
-    /* ========================
-       LOADING SPINNER
-       ======================== */
-    .loading-spinner {
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 3px solid #333;
-      border-top: 3px solid #00ffe7;
-      border-radius: 50%;
-      margin: 0 auto 1rem;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* ========================
-       RESULTS GRID
-       ======================== */
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .country-card {
-      background-color: #111;
-      border-radius: 10px;
-      padding: 1.5rem;
-      border: 1px solid #333;
-      transition: all 0.3s ease;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .country-card:hover {
-      transform: translateY(-5px);
-      border-color: #00ffe7;
-      box-shadow: 0 0 20px #00ffe7aa;
-    }
-
-    .country-flag {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      border: 2px solid #333;
-    }
-
-    .country-name {
-      font-size: 1.5rem;
-      color: #00ffe7;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 8px #00ffe7aa;
-    }
-
-    .country-detail {
-      margin: 0.5rem 0;
-      color: #f0f0f0;
-      font-size: 0.95rem;
-    }
-
-    .country-detail strong {
-      color: #ff00ff;
-      margin-right: 0.5rem;
-    }
-
-    /* ========================
-       ERROR & NO RESULTS
-       ======================== */
-    .error-message {
-      background-color: #330000;
-      border: 1px solid #ff0066;
-      color: #ff9999;
-      padding: 1rem;
-      border-radius: 8px;
-      text-align: center;
-      margin: 1rem 0;
-    }
-
-    .no-results {
-      text-align: center;
-      padding: 3rem;
-      color: #888;
-      font-size: 1.2rem;
-    }
-
-    /* ========================
-       ANIMATIONS
-       ======================== */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* ========================
-       RESPONSIVE DESIGN
-       ======================== */
-    @media (max-width: 768px) {
-      .api-container {
-        margin: 1rem;
-        padding: 1rem;
-      }
-
-      .search-box {
-        flex-direction: column;
-      }
-
-      .search-input {
-        min-width: auto;
-      }
-
-      .filter-buttons {
-        justify-content: flex-start;
-      }
-
-      .navbar {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .nav-links {
-        flex-direction: column;
-        gap: 0.8rem;
-      }
-    }
-  </style>
+  <title>Travel Explorer | WORLD TRAVEL</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="logo">NEONPULSE API LAB</div>
+    <div class="logo">🌍 WORLD TRAVEL</div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="profile.html">Profile</a></li>
       <li><a href="login.html">Login</a></li>
+      <li><a href="saved-countries.html" id="savedLink">Saved Places <span id="savedCount" class="saved-count">0</span></a></li>
     </ul>
   </nav>
 
   <!-- MAIN CONTENT -->
   <main class="api-container">
-    <h2 class="page-title">🌍 Country Explorer</h2>
-    <p class="api-description">Search for any country to see detailed information using the REST Countries API</p>
+    <h2 class="page-title"><i class="fas fa-map-marked-alt"></i> Travel Explorer</h2>
+    <p class="api-description">Discover countries and save your dream destinations!</p>
 
     <!-- SEARCH SECTION -->
     <div class="search-section">
@@ -342,25 +31,25 @@
         <input 
           type="text" 
           id="countryInput" 
-          placeholder="Enter country name (e.g., Philippines, Japan, Brazil)" 
+          placeholder="Search for a country (e.g., Philippines, Japan, Italy)" 
           class="search-input"
         >
-        <button id="searchBtn" class="search-btn">Search Country</button>
+        <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Search</button>
       </div>
       <div class="filter-buttons">
-        <button class="filter-btn" data-region="asia">Asia</button>
-        <button class="filter-btn" data-region="africa">Africa</button>
-        <button class="filter-btn" data-region="europe">Europe</button>
-        <button class="filter-btn" data-region="americas">Americas</button>
-        <button class="filter-btn" data-region="oceania">Oceania</button>
-        <button class="filter-btn" id="resetBtn">Show All</button>
+        <button class="filter-btn" data-region="asia">🌏 Asia</button>
+        <button class="filter-btn" data-region="africa">🌍 Africa</button>
+        <button class="filter-btn" data-region="europe">🌍 Europe</button>
+        <button class="filter-btn" data-region="americas">🌎 Americas</button>
+        <button class="filter-btn" data-region="oceania">🌊 Oceania</button>
+        <button class="filter-btn" id="resetBtn">🗺️ Show All</button>
       </div>
     </div>
 
     <!-- LOADING INDICATOR -->
     <div id="loading" class="loading-spinner" style="display: none;">
       <div class="spinner"></div>
-      <p>Fetching country data...</p>
+      <p>Fetching travel destinations...</p>
     </div>
 
     <!-- ERROR MESSAGE -->
@@ -373,22 +62,22 @@
 
     <!-- NO RESULTS MESSAGE -->
     <div id="noResults" class="no-results" style="display: none;">
-      <p>No countries found. Try another search term.</p>
+      <p><i class="fas fa-sad-tear"></i> No countries found. Try another search.</p>
     </div>
   </main>
 
   <footer>
-    <p>© 2026 NEONPULSE | API Integration Activity</p>
+    <p>© 2026 WORLD TRAVEL | Discover your next adventure</p>
   </footer>
 
   <script>
     // ========================
-    // COUNTRY EXPLORER - API INTEGRATION
+    // TRAVEL EXPLORER - SAVE DESTINATIONS
     // REST Countries API
     // ========================
 
-    // API Configuration
     const API_BASE_URL = 'https://restcountries.com/v3.1';
+    const STORAGE_KEY = 'WORLD_TRAVEL_SAVED_PLACES';
 
     // DOM Elements
     const countryInput = document.getElementById('countryInput');
@@ -399,71 +88,132 @@
     const noResults = document.getElementById('noResults');
     const filterButtons = document.querySelectorAll('.filter-btn');
     const resetBtn = document.getElementById('resetBtn');
+    const savedCountSpan = document.getElementById('savedCount');
 
-    // State
     let currentData = [];
-    let currentFilter = 'all';
 
     // ========================
-    // HELPER FUNCTIONS
+    // LOCALSTORAGE FUNCTIONS
     // ========================
 
-    // Show/hide loading spinner
+    function getSavedPlaces() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    }
+
+    function savePlaces(places) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(places));
+      updateSavedCount();
+    }
+
+    function isPlaceSaved(countryName) {
+      const saved = getSavedPlaces();
+      return saved.some(c => c.name === countryName);
+    }
+
+    function savePlace(countryData) {
+      const saved = getSavedPlaces();
+      
+      if (saved.some(c => c.name === countryData.name)) {
+        showToast('⚠️ This destination is already saved!');
+        return false;
+      }
+
+      saved.push(countryData);
+      savePlaces(saved);
+      showToast('✅ Destination saved to your bucket list!');
+      return true;
+    }
+
+    function updateSavedCount() {
+      const saved = getSavedPlaces();
+      if (savedCountSpan) {
+        savedCountSpan.textContent = saved.length;
+      }
+    }
+
+    function showToast(message) {
+      const existingToast = document.querySelector('.toast');
+      if (existingToast) {
+        existingToast.remove();
+      }
+
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
     function setLoading(isLoading) {
-      loadingSpinner.style.display = isLoading ? 'block' : 'none';
+      if (loadingSpinner) {
+        loadingSpinner.style.display = isLoading ? 'block' : 'none';
+      }
     }
 
-    // Show error message
     function showError(message) {
-      errorMessage.style.display = 'block';
-      errorMessage.textContent = message;
-      resultsContainer.innerHTML = '';
-      noResults.style.display = 'none';
+      if (errorMessage) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = message;
+      }
+      if (resultsContainer) {
+        resultsContainer.innerHTML = '';
+      }
+      if (noResults) {
+        noResults.style.display = 'none';
+      }
     }
 
-    // Hide error message
     function hideError() {
-      errorMessage.style.display = 'none';
+      if (errorMessage) {
+        errorMessage.style.display = 'none';
+      }
     }
 
-    // Format population number with commas
     function formatPopulation(population) {
       return population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    // Clear results
-    function clearResults() {
-      resultsContainer.innerHTML = '';
+    function formatArea(area) {
+      return area.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    // ========================
-    // DISPLAY COUNTRIES
-    // ========================
+    function clearResults() {
+      if (resultsContainer) {
+        resultsContainer.innerHTML = '';
+      }
+    }
 
     function displayCountries(countries) {
       clearResults();
       hideError();
 
       if (!countries || countries.length === 0) {
-        noResults.style.display = 'block';
+        if (noResults) {
+          noResults.style.display = 'block';
+        }
         return;
       }
 
-      noResults.style.display = 'none';
+      if (noResults) {
+        noResults.style.display = 'none';
+      }
 
       countries.forEach(country => {
         const card = document.createElement('div');
         card.className = 'country-card';
 
-        // Get country data with fallbacks
         const name = country.name?.common || 'N/A';
         const officialName = country.name?.official || name;
         const capital = country.capital?.[0] || 'No capital';
         const region = country.region || 'N/A';
         const subregion = country.subregion || 'N/A';
         const population = country.population ? formatPopulation(country.population) : 'N/A';
-        const area = country.area ? formatPopulation(country.area) : 'N/A';
-        const flag = country.flags?.png || country.flags?.svg || '';
+        const area = country.area ? formatArea(country.area) : 'N/A';
+        const flag = country.flags?.png || country.flags?.svg || 'https://via.placeholder.com/300x150?text=No+Flag';
         const currencies = country.currencies 
           ? Object.values(country.currencies).map(c => c.name).join(', ')
           : 'N/A';
@@ -471,27 +221,52 @@
           ? Object.values(country.languages).join(', ')
           : 'N/A';
 
+        const isSaved = isPlaceSaved(name);
+
         card.innerHTML = `
           <img src="${flag}" alt="Flag of ${name}" class="country-flag" onerror="this.src='https://via.placeholder.com/300x150?text=Flag+Not+Available'">
           <h3 class="country-name">${name}</h3>
-          <p class="country-detail"><strong>Official Name:</strong> ${officialName}</p>
           <p class="country-detail"><strong>Capital:</strong> ${capital}</p>
           <p class="country-detail"><strong>Region:</strong> ${region} (${subregion})</p>
           <p class="country-detail"><strong>Population:</strong> ${population}</p>
-          <p class="country-detail"><strong>Area:</strong> ${area} km²</p>
-          <p class="country-detail"><strong>Currencies:</strong> ${currencies}</p>
           <p class="country-detail"><strong>Languages:</strong> ${languages}</p>
+          <button class="save-btn ${isSaved ? 'saved' : ''}" data-country='${JSON.stringify({
+            name: name,
+            officialName: officialName,
+            capital: capital,
+            region: region,
+            subregion: subregion,
+            population: population,
+            area: area,
+            flag: flag,
+            currencies: currencies,
+            languages: languages
+          }).replace(/'/g, "&apos;")}'>
+            ${isSaved ? '✓ Saved to Bucket List' : '✈️ Add to Bucket List'}
+          </button>
         `;
 
-        resultsContainer.appendChild(card);
+        if (resultsContainer) {
+          resultsContainer.appendChild(card);
+        }
+      });
+
+      document.querySelectorAll('.save-btn:not(.saved)').forEach(btn => {
+        btn.addEventListener('click', handleSaveClick);
       });
     }
 
-    // ========================
-    // API CALLS
-    // ========================
+    function handleSaveClick(e) {
+      const btn = e.target;
+      const countryData = JSON.parse(btn.dataset.country);
 
-    // Fetch all countries
+      if (savePlace(countryData)) {
+        btn.textContent = '✓ Saved to Bucket List';
+        btn.classList.add('saved');
+        btn.removeEventListener('click', handleSaveClick);
+      }
+    }
+
     async function fetchAllCountries() {
       setLoading(true);
       hideError();
@@ -509,13 +284,12 @@
         
       } catch (error) {
         console.error('Error fetching countries:', error);
-        showError('Failed to fetch countries. Please check your internet connection and try again.');
+        showError('Failed to fetch destinations. Please check your internet connection.');
       } finally {
         setLoading(false);
       }
     }
 
-    // Search country by name
     async function searchCountry(name) {
       if (!name.trim()) {
         showError('Please enter a country name');
@@ -529,7 +303,9 @@
         const response = await fetch(`${API_BASE_URL}/name/${encodeURIComponent(name)}`);
         
         if (response.status === 404) {
-          noResults.style.display = 'block';
+          if (noResults) {
+            noResults.style.display = 'block';
+          }
           clearResults();
           return;
         }
@@ -544,19 +320,13 @@
         
       } catch (error) {
         console.error('Error searching country:', error);
-        showError('Failed to search for country. Please try again.');
+        showError('Failed to search for destination. Please try again.');
       } finally {
         setLoading(false);
       }
     }
 
-    // Filter by region
     async function filterByRegion(region) {
-      if (region === 'all') {
-        displayCountries(currentData);
-        return;
-      }
-
       setLoading(true);
       hideError();
       
@@ -568,66 +338,65 @@
         }
         
         const data = await response.json();
+        currentData = data;
         displayCountries(data);
         
       } catch (error) {
         console.error('Error filtering by region:', error);
-        showError('Failed to filter countries by region.');
+        showError('Failed to filter destinations by region.');
       } finally {
         setLoading(false);
       }
     }
 
-    // ========================
-    // EVENT HANDLERS
-    // ========================
+    if (searchBtn) {
+      searchBtn.addEventListener('click', () => {
+        const searchTerm = countryInput.value.trim();
+        if (searchTerm) {
+          searchCountry(searchTerm);
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+        }
+      });
+    }
 
-    // Search button click
-    searchBtn.addEventListener('click', () => {
-      const searchTerm = countryInput.value.trim();
-      if (searchTerm) {
-        searchCountry(searchTerm);
-        // Update active states
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-      }
-    });
+    if (countryInput) {
+      countryInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && searchBtn) {
+          searchBtn.click();
+        }
+      });
+    }
 
-    // Enter key in input
-    countryInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        searchBtn.click();
-      }
-    });
-
-    // Filter buttons
     filterButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const region = btn.dataset.region;
         
-        // Update active state
         filterButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         
         if (region) {
           filterByRegion(region);
-          countryInput.value = ''; // Clear search input
+          if (countryInput) {
+            countryInput.value = '';
+          }
         }
       });
     });
 
-    // Reset button
-    resetBtn.addEventListener('click', () => {
-      filterButtons.forEach(btn => btn.classList.remove('active'));
-      countryInput.value = '';
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        if (countryInput) {
+          countryInput.value = '';
+        }
+        fetchAllCountries();
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
       fetchAllCountries();
+      updateSavedCount();
     });
-
-    // ========================
-    // INITIAL LOAD
-    // ========================
-
-    // Load all countries when page loads
-    document.addEventListener('DOMContentLoaded', fetchAllCountries);
   </script>
 </body>
 </html>

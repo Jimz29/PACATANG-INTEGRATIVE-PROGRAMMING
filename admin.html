@@ -3,17 +3,18 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Admin Dashboard | NEONPULSE</title>
+<title>Travel Admin | WORLD TRAVEL</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
 <nav class="navbar">
-<div class="logo">NEONPULSE ADMIN</div>
+<div class="logo">🌍 WORLD TRAVEL ADMIN</div>
 
 <ul class="nav-links">
-<li><a href="manage-users.html">Manage Users</a></li>
+<li><a href="manage-users.html">Manage Travelers</a></li>
 <li><a href="profile.html">Profile</a></li>
 <li><a href="login.html">Logout</a></li>
 </ul>
@@ -22,36 +23,38 @@
 
 <main class="profile-container">
 
-<h2>Admin Dashboard</h2>
+<h2><i class="fas fa-user-shield"></i> Travel Admin Dashboard</h2>
 
 <div class="profile-card">
 
-<h3>Welcome Admin</h3>
+<h3>Welcome, Travel Admin</h3>
 
-<p>Use the menu to manage system data.</p>
+<p>Manage travelers, stories, and destinations from here.</p>
 
 <br>
 
-<a class="edit-btn" href="manage-users.html">Manage Users</a>
+<div style="display: flex; gap: 1rem; justify-content: center;">
+  <a class="edit-btn" href="manage-users.html" style="padding: 0.8rem 2rem;"><i class="fas fa-users"></i> Manage Travelers</a>
+  <a class="edit-btn" href="api.html" style="padding: 0.8rem 2rem; background: linear-gradient(90deg, #2a9d8f, #00b4d8);"><i class="fas fa-map"></i> View Destinations</a>
+</div>
 
 </div>
 
 </main>
 
 <footer>
-<p>© 2026 NEONPULSE</p>
+<p>© 2026 WORLD TRAVEL | Travel Community Platform</p>
 </footer>
 
 <script>
-
-const user = JSON.parse(localStorage.getItem("NEONPULSE_USER"));
+const user = JSON.parse(localStorage.getItem("WORLD_TRAVEL_USER"));
 
 if (!user || user.role !== "admin") {
-alert("Access denied. Admin only.");
-window.location.href = "login.html";
+  alert("Access denied. Travel Admins only.");
+  window.location.href = "login.html";
 }
-
 </script>
 
 </body>
 </html>
+

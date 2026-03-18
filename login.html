@@ -3,15 +3,16 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>NEONPULSE Login</title>
+  <title>WORLD TRAVEL | Join the Journey</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="logo">NEONPULSE</div>
+    <div class="logo">🌍 WORLD TRAVEL</div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
     </ul>
@@ -19,46 +20,49 @@
 
   <!-- LOGIN FORM -->
   <div id="login-form">
-    <h2>Login</h2>
+    <h2><i class="fas fa-globe-asia"></i> Welcome Back, Traveler</h2>
     <form id="loginForm">
       <label>Email:</label>
-      <input type="email" id="loginEmail" required>
+      <input type="email" id="loginEmail" placeholder="your@email.com" required>
 
       <label>Password:</label>
-      <input type="password" id="loginPassword" required>
+      <input type="password" id="loginPassword" placeholder="••••••••" required>
 
-      <button type="submit">Login</button>
+      <button type="submit"><i class="fas fa-sign-in-alt"></i> Start Exploring</button>
     </form>
 
     <p class="switch-form">
-      Don’t have an account? <a href="#" onclick="showSignup()">Sign up</a>
+      New to WORLD TRAVEL? <a href="#" onclick="showSignup()">Create an account</a>
     </p>
   </div>
 
   <!-- SIGNUP FORM -->
   <div id="signup-form" style="display: none;">
-    <h2>Sign Up</h2>
+    <h2><i class="fas fa-passport"></i> Join the Adventure</h2>
     <form id="signupForm">
       <label>Full Name:</label>
-      <input type="text" id="signupName" required>
+      <input type="text" id="signupName" placeholder="John Doe" required>
 
       <label>Email:</label>
-      <input type="email" id="signupEmail" required>
+      <input type="email" id="signupEmail" placeholder="john@example.com" required>
 
       <label>Phone Number:</label>
       <input type="tel" id="signupPhone" placeholder="+639XXXXXXXXX" required>
 
+      <label>Home Country:</label>
+      <input type="text" id="signupCountry" placeholder="Philippines" required>
+
       <label>Password:</label>
-      <input type="password" id="signupPassword" required>
+      <input type="password" id="signupPassword" placeholder="Minimum 6 characters" required>
 
       <label>Confirm Password:</label>
-      <input type="password" id="signupConfirmPassword" required>
+      <input type="password" id="signupConfirmPassword" placeholder="Re-enter password" required>
 
-      <button type="submit">Create Account</button>
+      <button type="submit"><i class="fas fa-user-plus"></i> Create Travel Account</button>
     </form>
 
     <p class="switch-form">
-      Already have an account? <a href="#" onclick="showLogin()">Login</a>
+      Already have an account? <a href="#" onclick="showLogin()">Sign in</a>
     </p>
   </div>
 

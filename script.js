@@ -1,4 +1,4 @@
-// ================= LOGIN & SIGNUP VALIDATION =================
+// ================= TRAVEL WEBSITE - LOGIN & SIGNUP VALIDATION =================
 
 // Show Signup / Login forms
 function showSignup() {
@@ -31,24 +31,25 @@ if (document.getElementById("loginForm")) {
     }
 
     // Load all users from localStorage
-    let users = JSON.parse(localStorage.getItem("NEONPULSE_USERS")) || [];
+    let users = JSON.parse(localStorage.getItem("WORLD_TRAVEL_USERS")) || [];
 
-    // If admin logs in, auto-add to users if not present
-    if (email.toLowerCase() === "admin@neonpulse.com" && password === "admin123") {
+    // Admin login for travel admin
+    if (email.toLowerCase() === "admin@worldtravel.com" && password === "admin123") {
       let adminUser = users.find(u => u.email === email);
       if (!adminUser) {
         adminUser = {
-          name: "Admin",
+          name: "Travel Admin",
           email: email,
           phone: "+63 000 000 0000",
+          country: "Philippines",
           password: password,
           role: "admin"
         };
         users.push(adminUser);
-        localStorage.setItem("NEONPULSE_USERS", JSON.stringify(users));
+        localStorage.setItem("WORLD_TRAVEL_USERS", JSON.stringify(users));
       }
-      localStorage.setItem("NEONPULSE_USER", JSON.stringify(adminUser));
-      alert("Login successful!");
+      localStorage.setItem("WORLD_TRAVEL_USER", JSON.stringify(adminUser));
+      alert("Welcome, Travel Admin!");
       window.location.href = "manage-users.html";
       return;
     }
@@ -61,11 +62,11 @@ if (document.getElementById("loginForm")) {
       return;
     }
 
-    localStorage.setItem("NEONPULSE_USER", JSON.stringify(storedUser));
-    alert("Login successful!");
+    localStorage.setItem("WORLD_TRAVEL_USER", JSON.stringify(storedUser));
+    alert("Welcome back, traveler! ✈️");
 
     if (storedUser.role === "admin") {
-      window.location.href = "manage-users.html"; // admin goes to manage users
+      window.location.href = "manage-users.html";
     } else {
       window.location.href = "profile.html";
     }
@@ -81,6 +82,7 @@ if (document.getElementById("signupForm")) {
     const name = document.getElementById("signupName").value.trim();
     const email = document.getElementById("signupEmail").value.trim();
     const phone = document.getElementById("signupPhone").value.trim();
+    const country = document.getElementById("signupCountry") ? document.getElementById("signupCountry").value.trim() : "";
     const password = document.getElementById("signupPassword").value;
     const confirmPassword = document.getElementById("signupConfirmPassword").value;
 
@@ -111,23 +113,23 @@ if (document.getElementById("signupForm")) {
       return;
     }
 
-    // ===== ADMIN ROLE CHECK =====
+    // Check if admin email
     let role = "user";
-    if (email.toLowerCase() === "admin@neonpulse.com") {
+    if (email.toLowerCase() === "admin@worldtravel.com") {
       role = "admin";
     }
 
-    const user = { name, email, phone, password, role };
+    const user = { name, email, phone, country, password, role };
 
-    // Save in NEONPULSE_USERS
-    let users = JSON.parse(localStorage.getItem("NEONPULSE_USERS")) || [];
+    // Save in WORLD_TRAVEL_USERS
+    let users = JSON.parse(localStorage.getItem("WORLD_TRAVEL_USERS")) || [];
     if (!users.some(u => u.email === email)) {
       users.push(user);
-      localStorage.setItem("NEONPULSE_USERS", JSON.stringify(users));
+      localStorage.setItem("WORLD_TRAVEL_USERS", JSON.stringify(users));
     }
 
-    localStorage.setItem("NEONPULSE_USER", JSON.stringify(user));
-    alert("Account created successfully! Please log in.");
+    localStorage.setItem("WORLD_TRAVEL_USER", JSON.stringify(user));
+    alert("Account created successfully! Welcome to WORLD TRAVEL! 🌍");
     showLogin();
   });
 }

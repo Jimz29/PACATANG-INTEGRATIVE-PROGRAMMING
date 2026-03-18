@@ -3,53 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEONPULSE</title>
+  <title>WORLD TRAVEL | Stories from the Road</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="logo">NEONPULSE</div>
+    <div class="logo">🌍 WORLD TRAVEL</div>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#features">About</a></li>
-      <li><a href="login.html" class="login">Login</a></li>
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="#destinations">Destinations</a></li>
+      <li><a href="login.html" class="login">Traveler Login</a></li>
       <li><a href="settings.html" class="signup">Settings</a></li>
     </ul>
   </nav>
 
   <!-- HERO SECTION -->
-  <section class="hero">
-    <h1>NEONPULSE</h1>
-    <p>The future interface for digital creators and innovators.</p>
-    <button class="cta-btn">Enter the Future</button>
+  <section class="hero travel-hero">
+    <h1>WORLD TRAVEL</h1>
+    <p>Every journey has a story. Share yours with the world.</p>
+    <button class="cta-btn" onclick="window.location.href='api.html'">Explore Countries</button>
   </section>
 
-  <!-- FEATURES / ABOUT SECTION -->
-  <section id="features" class="features">
-    <h2>Why NEONPULSE?</h2>
+  <!-- FEATURES / DESTINATIONS SECTION -->
+  <section id="destinations" class="features">
+    <h2>Popular Destinations</h2>
     <div class="feature-grid">
       <div class="card">
-        <h3>Futuristic Design</h3>
-        <p>Inspired by cyberpunk visuals and next-gen UI concepts.</p>
+        <i class="fas fa-umbrella-beach" style="font-size: 3rem; color: #ff9e00; margin-bottom: 1rem;"></i>
+        <h3>Bali, Indonesia</h3>
+        <p>Tropical paradise with stunning beaches and rich culture.</p>
+        <span class="travel-tag">🌴 234 stories</span>
       </div>
       <div class="card">
-        <h3>Creator Focused</h3>
-        <p>Built for designers, developers, and digital visionaries.</p>
+        <i class="fas fa-mountain" style="font-size: 3rem; color: #2a9d8f; margin-bottom: 1rem;"></i>
+        <h3>Swiss Alps</h3>
+        <p>Breathtaking mountains and unforgettable adventures.</p>
+        <span class="travel-tag">⛰️ 189 stories</span>
       </div>
       <div class="card">
-        <h3>Simple & Clean</h3>
-        <p>Minimal layout that highlights content without distractions.</p>
+        <i class="fas fa-city" style="font-size: 3rem; color: #00b4d8; margin-bottom: 1rem;"></i>
+        <h3>Tokyo, Japan</h3>
+        <p>Where tradition meets future in perfect harmony.</p>
+        <span class="travel-tag">🏯 312 stories</span>
       </div>
     </div>
   </section>
 
+  <!-- TRAVEL QUOTE SECTION -->
+  <section style="text-align: center; padding: 4rem 2rem; background: #1a2a3a; color: white;">
+    <i class="fas fa-quote-right" style="font-size: 3rem; color: #ff9e00; opacity: 0.5;"></i>
+    <p style="font-size: 1.8rem; font-style: italic; max-width: 800px; margin: 2rem auto;">
+      "The world is a book, and those who do not travel read only one page."
+    </p>
+    <p>- Saint Augustine</p>
+  </section>
+
   <!-- FOOTER -->
   <footer>
-    <p>© 2026 NEONPULSE | Created by Jim Roedil Pacatang</p>
-    <a href="index.html">Back to Landing Page</a>
+    <p>© 2026 WORLD TRAVEL | Created by Jim Roedil Pacatang</p>
+    <a href="index.html">Back to Top</a>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>

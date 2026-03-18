@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bucket List | WORLD TRAVEL</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">🌍 WORLD TRAVEL</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="api.html">Explore</a></li>
+      <li><a href="saved-countries.html" class="active">My Bucket List</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="saved-container">
+    <h2 class="page-title"><i class="fas fa-suitcase"></i> My Travel Bucket List</h2>
+
+    <!-- RESULTS SECTION -->
+    <div id="resultsContainer" class="results-grid">
+      <!-- Saved countries will be dynamically inserted here -->
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <h3><i class="fas fa-map-marked-alt"></i> Your Bucket List is Empty</h3>
+      <p>Start exploring countries and add your dream destinations!</p>
+      <a href="api.html" class="explore-btn"><i class="fas fa-compass"></i> Explore Destinations</a>
+    </div>
+
+    <!-- CLEAR ALL BUTTON -->
+    <button id="clearAllBtn" class="clear-all" style="display: none;">
+      <i class="fas fa-trash"></i> Clear All Places
+    </button>
+  </main>
+
+  <footer>
+    <p>© 2026 WORLD TRAVEL | Dream it. Plan it. Go it.</p>
+  </footer>
+
+  <script>
+    const STORAGE_KEY = 'WORLD_TRAVEL_SAVED_PLACES';
+    const resultsContainer = document.getElementById('resultsContainer');
+    const emptyState = document.getElementById('emptyState');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+
+    function showToast(message) {
+      const existingToast = document.querySelector('.toast');
+      if (existingToast) {
+        existingToast.remove();
+      }
+
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    function getSavedPlaces() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    }
+
+    function savePlaces(places) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(places));
+    }
+
+    function deletePlace(placeName) {
+      const saved = getSavedPlaces();
+      const filtered = saved.filter(c => c.name !== placeName);
+      savePlaces(filtered);
+      displaySavedPlaces();
+      showToast('🗑️ Destination removed from bucket list!');
+    }
+
+    function clearAllPlaces() {
+      if (confirm('Are you sure you want to clear your entire bucket list?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        displaySavedPlaces();
+        showToast('🗑️ All destinations cleared!');
+      }
+    }
+
+    function displaySavedPlaces() {
+      const saved = getSavedPlaces();
+      
+      resultsContainer.innerHTML = '';
+
+      if (saved.length === 0) {
+        emptyState.style.display = 'block';
+        clearAllBtn.style.display = 'none';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      clearAllBtn.style.display = 'block';
+
+      saved.forEach(place => {
+        const card = document.createElement('div');
+        card.className = 'country-card';
+
+        card.innerHTML = `
+          <img src="${place.flag}" alt="Flag of ${place.name}" class="country-flag" onerror="this.src='https://via.placeholder.com/300x150?text=Flag+Not+Available'">
+          <h3 class="country-name">${place.name}</h3>
+          <p class="country-detail"><strong>Capital:</strong> ${place.capital}</p>
+          <p class="country-detail"><strong>Region:</strong> ${place.region}</p>
+          <p class="country-detail"><strong>Population:</strong> ${place.population}</p>
+          <p class="country-detail"><strong>Languages:</strong> ${place.languages}</p>
+          <button class="delete-btn" data-place="${place.name}">
+            <i class="fas fa-times"></i> Remove from List
+          </button>
+        `;
+
+        resultsContainer.appendChild(card);
+      });
+
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const placeName = e.target.closest('.delete-btn').dataset.place;
+          deletePlace(placeName);
+        });
+      });
+    }
+
+    if (clearAllBtn) {
+      clearAllBtn.addEventListener('click', clearAllPlaces);
+    }
+
+    document.addEventListener('DOMContentLoaded', displaySavedPlaces);
+  </script>
+</body>
+</html>

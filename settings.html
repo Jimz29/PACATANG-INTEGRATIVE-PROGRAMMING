@@ -2,27 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Settings | NEONPULSE</title>
+  <title>Traveler Settings | WORLD TRAVEL</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
   <nav class="navbar">
-    <div class="logo">NEONPULSE</div>
+    <div class="logo">🌍 WORLD TRAVEL</div>
     <ul class="nav-links">
       <li><a href="profile.html">Back to Profile</a></li>
     </ul>
   </nav>
 
   <main class="settings-container">
-    <h2>Settings</h2>
+    <h2><i class="fas fa-cog"></i> Traveler Settings</h2>
 
     <!-- WRAP EVERYTHING INSIDE A FORM -->
     <form id="settingsForm">
 
     <!-- PROFILE SECTION -->
     <section class="settings-section">
-      <h3>Profile</h3>
+      <h3><i class="fas fa-user"></i> Profile Information</h3>
 
       <div class="form-group">
         <label>Profile Picture</label>
@@ -48,11 +49,48 @@
         <label>Phone Number</label>
         <input type="tel" id="settingsPhone" placeholder="+639-736-562-063">
       </div>
+
+      <div class="form-group">
+        <label>Home Country</label>
+        <input type="text" id="settingsCountry" placeholder="Your home country">
+      </div>
+    </section>
+
+    <!-- TRAVEL PREFERENCES -->
+    <section class="settings-section">
+      <h3><i class="fas fa-suitcase"></i> Travel Preferences</h3>
+
+      <div class="form-group">
+        <label>Preferred Travel Style</label>
+        <select id="travelStyle">
+          <option>Adventure Travel</option>
+          <option>Luxury Travel</option>
+          <option>Backpacking</option>
+          <option>Cultural Tourism</option>
+          <option>Beach Getaways</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Favorite Destination Type</label>
+        <select id="destinationType">
+          <option>Beaches & Islands</option>
+          <option>Mountains & Nature</option>
+          <option>Historical Cities</option>
+          <option>Modern Metropolises</option>
+          <option>Rural & Countryside</option>
+        </select>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="shareLocation">
+        <label for="shareLocation">Share my travel location with community</label>
+      </div>
     </section>
 
     <!-- SECURITY SECTION -->
     <section class="settings-section">
-      <h3>Security</h3>
+      <h3><i class="fas fa-lock"></i> Security</h3>
 
       <div class="form-group">
         <label>Change Password</label>
@@ -63,53 +101,41 @@
         <label>Confirm Password</label>
         <input type="password" id="settingsConfirmPassword" placeholder="Confirm new password">
       </div>
-
-      <div class="form-group checkbox-group">
-        <input type="checkbox" id="twoFactor">
-        <label for="twoFactor">Enable Two-Factor Authentication</label>
-      </div>
     </section>
 
-    <!-- PREFERENCES SECTION -->
+    <!-- NOTIFICATIONS -->
     <section class="settings-section">
-      <h3>Preferences</h3>
-
-      <div class="form-group">
-        <label>Theme</label>
-        <select id="settingsTheme">
-          <option>Dark</option>
-          <option>Light</option>
-          <option>Neon</option>
-        </select>
-      </div>
+      <h3><i class="fas fa-bell"></i> Notifications</h3>
 
       <div class="form-group checkbox-group">
         <input type="checkbox" id="emailNotifications" checked>
-        <label for="emailNotifications">Enable Email Notifications</label>
+        <label for="emailNotifications">New travel stories from favorite destinations</label>
       </div>
 
       <div class="form-group checkbox-group">
-        <input type="checkbox" id="appNotifications" checked>
-        <label for="appNotifications">Enable App Notifications</label>
+        <input type="checkbox" id="commentNotifications" checked>
+        <label for="commentNotifications">Comments on my travel stories</label>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="travelDeals" checked>
+        <label for="travelDeals">Travel deals and inspiration</label>
       </div>
     </section>
 
     <!-- ERROR MESSAGE -->
     <p id="settingsError" class="error-message"></p>
 
-    <button class="save-btn" type="submit">Save All Changes</button>
+    <button class="save-btn" type="submit"><i class="fas fa-save"></i> Save All Changes</button>
 
     </form>
   </main>
 
   <footer>
-    <p>© 2026 NEONPULSE</p>
+    <p>© 2026 WORLD TRAVEL | Wander often, wonder always</p>
   </footer>
 
-  <!-- LINK TO SCRIPT -->
   <script src="script.js"></script>
 
 </body>
 </html>
-
-

@@ -2,65 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Profile | NEONPULSE</title>
+  <title>Traveler Profile | WORLD TRAVEL</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
 <nav class="navbar">
-  <div class="logo">NEONPULSE</div>
+  <div class="logo">🌍 WORLD TRAVEL</div>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="api.html">Explore</a></li>
     <li><a href="settings.html">Settings</a></li>
     <li><a href="login.html" onclick="logout()">Logout</a></li>
   </ul>
 </nav>
 
 <main class="profile-container">
-  <h2>User Profile</h2>
+  <h2>Traveler Profile</h2>
   <div class="profile-card">
     <div class="profile-header">
-      <img src="default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg" alt="Profile Avatar">
+      <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile Avatar">
       <div class="basic-info">
         <h3 id="userName">Name</h3>
         <p class="email" id="userEmail">email@example.com</p>
         <p class="phone" id="userPhone">+63 000 000 0000</p>
+        <p class="home-country" id="userCountry">Home Country</p>
       </div>
     </div>
 
     <hr>
 
     <section class="profile-section">
-      <h4>About Me</h4>
-      <p>Welcome to your profile page!</p>
+      <h4><i class="fas fa-compass"></i> Travel Stats</h4>
+      <div style="display: flex; gap: 2rem; justify-content: center; margin: 1rem 0;">
+        <div style="text-align: center;">
+          <span style="font-size: 2rem; color: #ff9e00;">12</span>
+          <p>Countries Visited</p>
+        </div>
+        <div style="text-align: center;">
+          <span style="font-size: 2rem; color: #00b4d8;">8</span>
+          <p>Stories Written</p>
+        </div>
+        <div style="text-align: center;">
+          <span style="font-size: 2rem; color: #2a9d8f;">345</span>
+          <p>Photos Shared</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="profile-section">
+      <h4><i class="fas fa-feather-alt"></i> About Me</h4>
+      <p id="userBio">Passionate traveler exploring the world one story at a time.</p>
     </section>
 
     <!-- Back to Home Button -->
     <div style="text-align:center; margin-top:20px;">
       <button onclick="goHome()" style="
         padding:10px 20px;
-        background: linear-gradient(90deg, #00ffe7, #ff00ff);
-        color: #111;
+        background: linear-gradient(90deg, #00b4d8, #ff9e00);
+        color: white;
         font-weight:bold;
         border:none;
-        border-radius:8px;
+        border-radius:30px;
         cursor:pointer;
-      ">Back to Home</button>
+      "><i class="fas fa-home"></i> Back to Home</button>
     </div>
 
   </div>
 </main>
 
 <footer>
-  <p>© 2026 NEONPULSE</p>
+  <p>© 2026 WORLD TRAVEL | Every journey has a story</p>
 </footer>
 
 <script>
   // Load user info from localStorage
-  const user = JSON.parse(localStorage.getItem("NEONPULSE_USER"));
+  const user = JSON.parse(localStorage.getItem("WORLD_TRAVEL_USER"));
   if (user) {
     document.getElementById("userName").innerText = user.name;
     document.getElementById("userEmail").innerText = user.email;
     document.getElementById("userPhone").innerText = user.phone || "+63 000 000 0000";
+    document.getElementById("userCountry").innerText = user.country || "Unknown";
   } else {
     alert("Please login first.");
     window.location.href = "login.html";
@@ -68,6 +91,7 @@
 
   // Logout
   function logout() {
+    localStorage.removeItem("WORLD_TRAVEL_USER");
     window.location.href = "login.html";
   }
 
