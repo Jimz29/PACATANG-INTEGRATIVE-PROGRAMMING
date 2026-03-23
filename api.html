@@ -6,78 +6,361 @@
   <title>Travel Explorer | WORLD TRAVEL</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Additional styles for attractions modal and enhanced features */
+    .attractions-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 180, 216, 0.9);
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      z-index: 1;
+    }
+    
+    .country-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .country-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .modal-content {
+      background-color: white;
+      margin: 2% auto;
+      padding: 0;
+      width: 90%;
+      max-width: 1000px;
+      max-height: 85vh;
+      border-radius: 20px;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .modal-header {
+      background: linear-gradient(135deg, #023e8a, #00b4d8);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 20px 20px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .close-modal {
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    
+    .close-modal:hover {
+      color: #ff9e00;
+      transform: scale(1.1);
+    }
+    
+    .modal-body {
+      padding: 1.5rem;
+    }
+    
+    .attractions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    
+    .attraction-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .attraction-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border-color: #ff9e00;
+    }
+    
+    .attraction-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #f0f0f0;
+    }
+    
+    .attraction-info {
+      padding: 1rem;
+    }
+    
+    .attraction-info h4 {
+      color: #023e8a;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+    
+    .attraction-info p {
+      color: #666;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+    
+    .add-attraction-btn {
+      width: 100%;
+      padding: 0.6rem;
+      background: linear-gradient(90deg, #00b4d8, #2a9d8f);
+      border: none;
+      border-radius: 25px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    
+    .add-attraction-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,180,216,0.3);
+    }
+    
+    .add-attraction-btn.added {
+      background: #6c757d;
+      cursor: not-allowed;
+    }
+    
+    .country-flag-large {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #ff9e00;
+    }
+    
+    .country-info-modal {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .country-stats {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.5rem;
+    }
+    
+    .stat-item {
+      text-align: center;
+      padding: 0.5rem;
+      background: white;
+      border-radius: 8px;
+    }
+    
+    .stat-item i {
+      color: #ff9e00;
+      margin-right: 0.3rem;
+    }
+    
+    .section-title {
+      font-size: 1.3rem;
+      color: #023e8a;
+      margin: 1rem 0 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .loading-spinner-modal {
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .spinner-modal {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #ff9e00;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .toast-attraction {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(90deg, #2a9d8f, #00b4d8);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: bold;
+      z-index: 1000;
+      animation: slideInUp 0.3s ease;
+    }
+    
+    @keyframes slideInUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .attraction-category {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 0.2rem 0.6rem;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      color: #ff9e00;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stats-summary {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    .stats-summary span {
+      font-weight: bold;
+      color: #ff9e00;
+      font-size: 1.2rem;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">🌍 WORLD TRAVEL</div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="profile.html">Profile</a></li>
       <li><a href="login.html">Login</a></li>
-      <li><a href="saved-countries.html" id="savedLink">Saved Places <span id="savedCount" class="saved-count">0</span></a></li>
+      <li><a href="saved-countries.html" id="savedLink">My Bucket List <span id="savedCount" class="saved-count">0</span></a></li>
     </ul>
   </nav>
 
-  <!-- MAIN CONTENT -->
+  <div id="attractionsModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-umbrella-beach"></i> <span id="modalCountryName"></span></h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <div class="loading-spinner-modal">
+          <div class="spinner-modal"></div>
+          <p>Discovering amazing attractions...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <main class="api-container">
     <h2 class="page-title"><i class="fas fa-map-marked-alt"></i> Travel Explorer</h2>
-    <p class="api-description">Discover countries and save your dream destinations!</p>
+    <p class="api-description">Explore countries around the world and discover amazing tourist attractions powered by live data from Wikipedia and OpenStreetMap! 🌍✨</p>
 
-    <!-- SEARCH SECTION -->
+    <div class="stats-summary">
+      <i class="fas fa-globe"></i> Explore <span id="countryCount">193</span> countries | 
+      <i class="fas fa-map-marker-alt"></i> Discover real attractions | 
+      <i class="fas fa-heart"></i> Save to your bucket list
+    </div>
+
     <div class="search-section">
       <div class="search-box">
-        <input 
-          type="text" 
-          id="countryInput" 
-          placeholder="Search for a country (e.g., Philippines, Japan, Italy)" 
-          class="search-input"
-        >
-        <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Search</button>
+        <input type="text" id="countryInput" placeholder="Search for a country (e.g., Philippines, Japan, Italy, Brazil)" class="search-input">
+        <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Explore</button>
       </div>
       <div class="filter-buttons">
         <button class="filter-btn" data-region="asia">🌏 Asia</button>
         <button class="filter-btn" data-region="africa">🌍 Africa</button>
-        <button class="filter-btn" data-region="europe">🌍 Europe</button>
+        <button class="filter-btn" data-region="europe">🇪🇺 Europe</button>
         <button class="filter-btn" data-region="americas">🌎 Americas</button>
         <button class="filter-btn" data-region="oceania">🌊 Oceania</button>
-        <button class="filter-btn" id="resetBtn">🗺️ Show All</button>
+        <button class="filter-btn" id="resetBtn">🌐 All Countries</button>
       </div>
     </div>
 
-    <!-- LOADING INDICATOR -->
     <div id="loading" class="loading-spinner" style="display: none;">
       <div class="spinner"></div>
-      <p>Fetching travel destinations...</p>
+      <p>Fetching travel destinations from around the world...</p>
     </div>
 
-    <!-- ERROR MESSAGE -->
     <div id="errorMessage" class="error-message" style="display: none;"></div>
 
-    <!-- RESULTS SECTION -->
-    <div id="resultsContainer" class="results-grid">
-      <!-- Country cards will be dynamically inserted here -->
-    </div>
+    <div id="resultsContainer" class="results-grid"></div>
 
-    <!-- NO RESULTS MESSAGE -->
     <div id="noResults" class="no-results" style="display: none;">
-      <p><i class="fas fa-sad-tear"></i> No countries found. Try another search.</p>
+      <p><i class="fas fa-sad-tear"></i> No countries found. Try another search or explore all countries!</p>
     </div>
   </main>
 
   <footer>
-    <p>© 2026 WORLD TRAVEL | Discover your next adventure</p>
+    <p>© 2026 WORLD TRAVEL | Discover your next adventure with real-world data</p>
   </footer>
 
   <script>
-    // ========================
-    // TRAVEL EXPLORER - SAVE DESTINATIONS
-    // REST Countries API
-    // ========================
-
+    // API Configuration
     const API_BASE_URL = 'https://restcountries.com/v3.1';
+    const WIKIPEDIA_API = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+    const WIKIPEDIA_SEARCH_API = 'https://en.wikipedia.org/w/api.php';
+    
+    // Storage keys
     const STORAGE_KEY = 'WORLD_TRAVEL_SAVED_PLACES';
+    const ATTRACTIONS_STORAGE_KEY = 'WORLD_TRAVEL_SAVED_ATTRACTIONS';
 
     // DOM Elements
     const countryInput = document.getElementById('countryInput');
@@ -89,202 +372,472 @@
     const filterButtons = document.querySelectorAll('.filter-btn');
     const resetBtn = document.getElementById('resetBtn');
     const savedCountSpan = document.getElementById('savedCount');
+    const countryCountSpan = document.getElementById('countryCount');
+    const modal = document.getElementById('attractionsModal');
+    const modalCountryName = document.getElementById('modalCountryName');
+    const modalBody = document.getElementById('modalBody');
+    const closeModal = document.querySelector('.close-modal');
 
     let currentData = [];
+    let attractionsCache = {};
 
-    // ========================
-    // LOCALSTORAGE FUNCTIONS
-    // ========================
-
-    function getSavedPlaces() {
-      const saved = localStorage.getItem(STORAGE_KEY);
+    // Helper Functions
+    function getSavedAttractions() {
+      const saved = localStorage.getItem(ATTRACTIONS_STORAGE_KEY);
       return saved ? JSON.parse(saved) : [];
     }
 
-    function savePlaces(places) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(places));
-      updateSavedCount();
-    }
-
-    function isPlaceSaved(countryName) {
-      const saved = getSavedPlaces();
-      return saved.some(c => c.name === countryName);
-    }
-
-    function savePlace(countryData) {
-      const saved = getSavedPlaces();
-      
-      if (saved.some(c => c.name === countryData.name)) {
-        showToast('⚠️ This destination is already saved!');
+    function saveAttraction(attraction) {
+      const saved = getSavedAttractions();
+      if (saved.some(a => a.name === attraction.name && a.country === attraction.country)) {
+        showToast(`⚠️ "${attraction.name}" is already in your bucket list!`, true);
         return false;
       }
-
-      saved.push(countryData);
-      savePlaces(saved);
-      showToast('✅ Destination saved to your bucket list!');
+      saved.push(attraction);
+      localStorage.setItem(ATTRACTIONS_STORAGE_KEY, JSON.stringify(saved));
+      updateSavedCount();
+      showToast(`✅ "${attraction.name}" added to your travel bucket list!`, true);
       return true;
     }
 
-    function updateSavedCount() {
-      const saved = getSavedPlaces();
-      if (savedCountSpan) {
-        savedCountSpan.textContent = saved.length;
-      }
+    function isAttractionSaved(attractionName, countryName) {
+      const saved = getSavedAttractions();
+      return saved.some(a => a.name === attractionName && a.country === countryName);
     }
 
-    function showToast(message) {
-      const existingToast = document.querySelector('.toast');
-      if (existingToast) {
-        existingToast.remove();
-      }
-
+    function showToast(message, isAttraction = false) {
+      const existingToast = document.querySelector('.toast, .toast-attraction');
+      if (existingToast) existingToast.remove();
       const toast = document.createElement('div');
-      toast.className = 'toast';
+      toast.className = isAttraction ? 'toast-attraction' : 'toast';
       toast.textContent = message;
       document.body.appendChild(toast);
-
-      setTimeout(() => {
-        toast.remove();
-      }, 3000);
+      setTimeout(() => toast.remove(), 3000);
     }
 
-    function setLoading(isLoading) {
-      if (loadingSpinner) {
-        loadingSpinner.style.display = isLoading ? 'block' : 'none';
+    // Fetch Wikipedia page summary
+    async function fetchWikipediaSummary(topic) {
+      try {
+        const response = await fetch(`${WIKIPEDIA_API}${encodeURIComponent(topic)}`);
+        if (response.ok) {
+          const data = await response.json();
+          return {
+            description: data.extract || null,
+            image: data.thumbnail?.source || null,
+            exists: true
+          };
+        }
+      } catch (error) {
+        console.log('Wikipedia fetch failed for:', topic);
       }
+      return { description: null, image: null, exists: false };
     }
 
-    function showError(message) {
-      if (errorMessage) {
-        errorMessage.style.display = 'block';
-        errorMessage.textContent = message;
+    // Search Wikipedia for attractions
+    async function searchWikipediaAttractions(countryName, cityName) {
+      try {
+        const searchUrl = `${WIKIPEDIA_SEARCH_API}?action=query&list=search&srsearch=${encodeURIComponent(`List of tourist attractions in ${cityName || countryName}`)}&format=json&origin=*`;
+        const response = await fetch(searchUrl);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.query?.search) {
+            const attractions = [];
+            for (let i = 0; i < Math.min(data.query.search.length, 5); i++) {
+              const result = data.query.search[i];
+              const pageUrl = `https://en.wikipedia.org/wiki/${encodeURIComponent(result.title)}`;
+              attractions.push({
+                name: result.title,
+                description: result.snippet?.replace(/<[^>]*>/g, '') || `A popular attraction in ${countryName}`,
+                image: null,
+                category: 'Tourist Attraction',
+                url: pageUrl
+              });
+              await new Promise(resolve => setTimeout(resolve, 200));
+            }
+            return attractions;
+          }
+        }
+      } catch (error) {
+        console.log('Wikipedia search failed:', error);
       }
-      if (resultsContainer) {
-        resultsContainer.innerHTML = '';
-      }
-      if (noResults) {
-        noResults.style.display = 'none';
-      }
+      return [];
     }
 
-    function hideError() {
-      if (errorMessage) {
-        errorMessage.style.display = 'none';
+    // Fetch famous places using Wikipedia API
+    async function fetchFamousPlaces(countryName, capitalCity) {
+      const attractions = [];
+      
+      // Search for famous landmarks and attractions
+      const searchQueries = [
+        `List of landmarks in ${capitalCity || countryName}`,
+        `Tourist attractions in ${countryName}`,
+        `Famous places in ${countryName}`,
+        `${countryName} landmarks`
+      ];
+      
+      for (const query of searchQueries) {
+        try {
+          const searchUrl = `${WIKIPEDIA_SEARCH_API}?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`;
+          const response = await fetch(searchUrl);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.query?.search) {
+              for (const result of data.query.search.slice(0, 3)) {
+                if (!attractions.some(a => a.name === result.title)) {
+                  const wikiData = await fetchWikipediaSummary(result.title);
+                  attractions.push({
+                    name: result.title,
+                    description: wikiData.description || result.snippet?.replace(/<[^>]*>/g, '') || `A must-visit destination in ${countryName}`,
+                    image: wikiData.image || null,
+                    category: getAttractionCategory(result.title)
+                  });
+                }
+                await new Promise(resolve => setTimeout(resolve, 150));
+              }
+            }
+          }
+        } catch (error) {
+          console.log(`Failed to fetch for query: ${query}`);
+        }
       }
+      
+      return attractions;
+    }
+
+    // Get attraction category based on name
+    function getAttractionCategory(name) {
+      const lowerName = name.toLowerCase();
+      if (lowerName.includes('beach')) return 'Beach';
+      if (lowerName.includes('mountain') || lowerName.includes('peak')) return 'Mountain';
+      if (lowerName.includes('museum') || lowerName.includes('gallery')) return 'Cultural';
+      if (lowerName.includes('castle') || lowerName.includes('palace') || lowerName.includes('fort')) return 'Historical';
+      if (lowerName.includes('temple') || lowerName.includes('church') || lowerName.includes('mosque')) return 'Religious';
+      if (lowerName.includes('park') || lowerName.includes('garden')) return 'Nature';
+      if (lowerName.includes('tower') || lowerName.includes('monument')) return 'Landmark';
+      if (lowerName.includes('waterfall')) return 'Natural Wonder';
+      return 'Tourist Attraction';
+    }
+
+    // Get best time to visit based on region
+    function getBestTimeToVisit(countryName, region) {
+      const times = {
+        'asia': 'November to March (Cool and dry season)',
+        'africa': 'May to October (Dry season)',
+        'europe': 'May to September (Summer months)',
+        'americas': 'Varies by region - Spring and Fall generally best',
+        'oceania': 'September to November or March to May',
+        'default': 'Visit during local dry season for best experience'
+      };
+      
+      const specificTimes = {
+        'Philippines': 'December to May (Dry Season)',
+        'Japan': 'March to May (Cherry Blossoms) or October to November (Autumn)',
+        'Thailand': 'November to April (Cool and Dry)',
+        'Vietnam': 'February to April or August to October',
+        'Italy': 'April to June or September to October',
+        'France': 'May to September',
+        'Spain': 'March to May or September to November',
+        'United States': 'Spring (March-May) and Fall (September-November)',
+        'Australia': 'September to November or March to May',
+        'Brazil': 'December to March (Summer)',
+        'India': 'October to March (Winter)'
+      };
+      
+      return specificTimes[countryName] || times[region?.toLowerCase()] || times.default;
+    }
+
+    // Generate activities for attraction
+    function getActivitiesForAttraction(name) {
+      const activities = [
+        "Sightseeing tours", "Photography", "Local cuisine tasting", 
+        "Cultural experiences", "Guided tours", "Shopping", "Hiking",
+        "Historical exploration", "Nature walks", "Adventure activities"
+      ];
+      const shuffled = [...activities];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled.slice(0, 4).join(", ");
+    }
+
+    // Main function to fetch attractions
+    async function fetchCountryAttractions(countryName, capitalCity, region) {
+      const cacheKey = `${countryName}-${capitalCity}`;
+      if (attractionsCache[cacheKey]) {
+        return attractionsCache[cacheKey];
+      }
+
+      const attractions = [];
+      
+      // Fetch from Wikipedia
+      const famousPlaces = await fetchFamousPlaces(countryName, capitalCity);
+      attractions.push(...famousPlaces);
+      
+      // If we need more attractions, try searching for capital city attractions
+      if (attractions.length < 4 && capitalCity) {
+        const capitalAttractions = await fetchFamousPlaces(capitalCity, capitalCity);
+        attractions.push(...capitalAttractions);
+      }
+      
+      // Remove duplicates and format
+      const uniqueAttractions = [];
+      const names = new Set();
+      for (const attr of attractions) {
+        if (attr.name && !names.has(attr.name.toLowerCase())) {
+          names.add(attr.name.toLowerCase());
+          
+          uniqueAttractions.push({
+            name: attr.name,
+            description: attr.description.substring(0, 200) || `Explore the wonders of ${attr.name}, a remarkable destination in ${countryName}.`,
+            image: attr.image || `https://source.unsplash.com/500x300/?${encodeURIComponent(attr.name)},${encodeURIComponent(countryName)}`,
+            category: attr.category,
+            location: countryName,
+            bestTime: getBestTimeToVisit(countryName, region),
+            activities: getActivitiesForAttraction(attr.name)
+          });
+        }
+      }
+
+      attractionsCache[cacheKey] = uniqueAttractions.slice(0, 8);
+      return attractionsCache[cacheKey];
+    }
+
+    function updateSavedCount() {
+      const savedCountries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const savedAttractions = getSavedAttractions();
+      const totalSaved = savedCountries.length + savedAttractions.length;
+      if (savedCountSpan) savedCountSpan.textContent = totalSaved;
     }
 
     function formatPopulation(population) {
+      if (!population) return 'N/A';
       return population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    function formatArea(area) {
-      return area.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
     }
 
-    function clearResults() {
-      if (resultsContainer) {
-        resultsContainer.innerHTML = '';
+    async function showAttractions(country) {
+      modal.style.display = 'block';
+      modalCountryName.innerHTML = `${country.name} <span style="font-size: 0.9rem;">Discovering attractions...</span>`;
+      modalBody.innerHTML = `
+        <div class="loading-spinner-modal">
+          <div class="spinner-modal"></div>
+          <p>Exploring Wikipedia for ${country.name} attractions...</p>
+        </div>
+      `;
+
+      try {
+        const attractions = await fetchCountryAttractions(country.name, country.capital, country.region);
+        
+        modalCountryName.innerHTML = `${country.name} <span style="font-size: 0.9rem;">(${attractions.length} Attractions)</span>`;
+        
+        let attractionsHtml = `
+          <div class="country-info-modal">
+            <img src="${country.flag}" alt="Flag of ${country.name}" class="country-flag-large" onerror="this.src='https://via.placeholder.com/80x60?text=Flag'">
+            <div class="country-stats">
+              <div class="stat-item"><i class="fas fa-landmark"></i> Capital: ${country.capital || 'N/A'}</div>
+              <div class="stat-item"><i class="fas fa-globe"></i> Region: ${country.region}</div>
+              <div class="stat-item"><i class="fas fa-users"></i> Population: ${country.population}</div>
+            </div>
+          </div>
+          <div class="section-title">
+            <i class="fas fa-umbrella-beach"></i>
+            <span>Must-Visit Attractions</span>
+          </div>
+          <div class="attractions-grid">
+        `;
+        
+        if (attractions.length === 0) {
+          attractionsHtml += `
+            <div style="text-align: center; padding: 2rem; grid-column: 1/-1;">
+              <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: #ff9e00;"></i>
+              <p style="margin-top: 1rem;">No specific attractions found. Try exploring nearby countries!</p>
+              <p style="font-size: 0.9rem; color: #666;">You can still save this country to your bucket list.</p>
+            </div>
+          `;
+        } else {
+          attractions.forEach(attraction => {
+            const isSaved = isAttractionSaved(attraction.name, country.name);
+            attractionsHtml += `
+              <div class="attraction-card">
+                <img src="${attraction.image}" alt="${attraction.name}" class="attraction-image" onerror="this.src='https://via.placeholder.com/500x300?text=${encodeURIComponent(attraction.name)}'">
+                <div class="attraction-info">
+                  <h4>${escapeHtml(attraction.name)}</h4>
+                  <span class="attraction-category"><i class="fas fa-tag"></i> ${attraction.category}</span>
+                  <p>${escapeHtml(attraction.description.substring(0, 120))}${attraction.description.length > 120 ? '...' : ''}</p>
+                  <p style="font-size:0.75rem; color:#ff9e00;"><i class="fas fa-calendar"></i> Best time: ${attraction.bestTime}</p>
+                  <p style="font-size:0.75rem; color:#00b4d8;"><i class="fas fa-hiking"></i> Activities: ${attraction.activities}</p>
+                  <button class="add-attraction-btn ${isSaved ? 'added' : ''}" 
+                          data-attraction='${JSON.stringify({
+                            name: attraction.name,
+                            country: country.name,
+                            description: attraction.description,
+                            image: attraction.image,
+                            category: attraction.category,
+                            bestTime: attraction.bestTime,
+                            activities: attraction.activities
+                          }).replace(/'/g, "&apos;")}'>
+                    <i class="fas ${isSaved ? 'fa-check-circle' : 'fa-plus-circle'}"></i>
+                    ${isSaved ? 'In Your Bucket List' : 'Add to Bucket List'}
+                  </button>
+                </div>
+              </div>
+            `;
+          });
+        }
+        
+        attractionsHtml += `</div>`;
+        
+        // Add save country button
+        attractionsHtml += `
+          <div style="margin-top: 2rem; text-align: center; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+            <button id="saveCountryBtn" class="add-attraction-btn" style="width: auto; padding: 0.8rem 2rem;">
+              <i class="fas fa-save"></i> Save ${country.name} to Bucket List
+            </button>
+          </div>
+        `;
+        
+        modalBody.innerHTML = attractionsHtml;
+        
+        // Attach event listeners
+        document.querySelectorAll('.add-attraction-btn:not(.added)').forEach(btn => {
+          if (btn.id !== 'saveCountryBtn') {
+            btn.addEventListener('click', function(e) {
+              e.stopPropagation();
+              const attractionData = JSON.parse(this.dataset.attraction);
+              if (saveAttraction(attractionData)) {
+                this.classList.add('added');
+                this.innerHTML = '<i class="fas fa-check-circle"></i> In Your Bucket List';
+              }
+            });
+          }
+        });
+        
+        // Save country button
+        const saveCountryBtn = document.getElementById('saveCountryBtn');
+        if (saveCountryBtn) {
+          saveCountryBtn.addEventListener('click', () => {
+            saveCountryToBucketList(country);
+          });
+        }
+        
+      } catch (error) {
+        console.error('Error fetching attractions:', error);
+        modalBody.innerHTML = `
+          <div class="error-message-modal" style="background: #fff3f3; border: 1px solid #ff6b6b; color: #c92a2a; padding: 1rem; border-radius: 8px; text-align: center;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Unable to load attractions. Please check your connection and try again.</p>
+            <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #ff9e00; border: none; border-radius: 20px; cursor: pointer; color: white;">Retry</button>
+          </div>
+        `;
       }
     }
 
+    function saveCountryToBucketList(country) {
+      let savedCountries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if (!savedCountries.some(c => c.name === country.name)) {
+        savedCountries.push({
+          name: country.name,
+          capital: country.capital,
+          region: country.region,
+          population: country.population,
+          flag: country.flag
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(savedCountries));
+        updateSavedCount();
+        showToast(`✅ "${country.name}" added to your bucket list!`, true);
+      } else {
+        showToast(`⚠️ "${country.name}" is already in your bucket list!`, true);
+      }
+    }
+
+    function closeModalFunc() {
+      modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      if (event.target === modal) closeModalFunc();
+    }
+    closeModal.onclick = closeModalFunc;
+
     function displayCountries(countries) {
-      clearResults();
+      if (resultsContainer) resultsContainer.innerHTML = '';
       hideError();
 
       if (!countries || countries.length === 0) {
-        if (noResults) {
-          noResults.style.display = 'block';
-        }
+        if (noResults) noResults.style.display = 'block';
         return;
       }
-
-      if (noResults) {
-        noResults.style.display = 'none';
-      }
+      if (noResults) noResults.style.display = 'none';
 
       countries.forEach(country => {
         const card = document.createElement('div');
         card.className = 'country-card';
-
         const name = country.name?.common || 'N/A';
-        const officialName = country.name?.official || name;
         const capital = country.capital?.[0] || 'No capital';
         const region = country.region || 'N/A';
-        const subregion = country.subregion || 'N/A';
         const population = country.population ? formatPopulation(country.population) : 'N/A';
-        const area = country.area ? formatArea(country.area) : 'N/A';
-        const flag = country.flags?.png || country.flags?.svg || 'https://via.placeholder.com/300x150?text=No+Flag';
-        const currencies = country.currencies 
-          ? Object.values(country.currencies).map(c => c.name).join(', ')
-          : 'N/A';
-        const languages = country.languages 
-          ? Object.values(country.languages).join(', ')
-          : 'N/A';
-
-        const isSaved = isPlaceSaved(name);
+        const flag = country.flags?.png || 'https://via.placeholder.com/300x150';
 
         card.innerHTML = `
-          <img src="${flag}" alt="Flag of ${name}" class="country-flag" onerror="this.src='https://via.placeholder.com/300x150?text=Flag+Not+Available'">
-          <h3 class="country-name">${name}</h3>
-          <p class="country-detail"><strong>Capital:</strong> ${capital}</p>
-          <p class="country-detail"><strong>Region:</strong> ${region} (${subregion})</p>
+          <div class="attractions-badge">
+            <i class="fas fa-map-marker-alt"></i> Explore Attractions
+          </div>
+          <img src="${flag}" alt="Flag of ${name}" class="country-flag" onerror="this.src='https://via.placeholder.com/300x150?text=Flag'">
+          <h3 class="country-name">${escapeHtml(name)}</h3>
+          <p class="country-detail"><strong>Capital:</strong> ${escapeHtml(capital)}</p>
+          <p class="country-detail"><strong>Region:</strong> ${escapeHtml(region)}</p>
           <p class="country-detail"><strong>Population:</strong> ${population}</p>
-          <p class="country-detail"><strong>Languages:</strong> ${languages}</p>
-          <button class="save-btn ${isSaved ? 'saved' : ''}" data-country='${JSON.stringify({
-            name: name,
-            officialName: officialName,
-            capital: capital,
-            region: region,
-            subregion: subregion,
-            population: population,
-            area: area,
-            flag: flag,
-            currencies: currencies,
-            languages: languages
-          }).replace(/'/g, "&apos;")}'>
-            ${isSaved ? '✓ Saved to Bucket List' : '✈️ Add to Bucket List'}
-          </button>
         `;
 
-        if (resultsContainer) {
-          resultsContainer.appendChild(card);
-        }
-      });
+        card.addEventListener('click', () => {
+          showAttractions({
+            name: name,
+            capital: capital,
+            region: region,
+            population: population,
+            flag: flag
+          });
+        });
 
-      document.querySelectorAll('.save-btn:not(.saved)').forEach(btn => {
-        btn.addEventListener('click', handleSaveClick);
+        resultsContainer.appendChild(card);
       });
     }
 
-    function handleSaveClick(e) {
-      const btn = e.target;
-      const countryData = JSON.parse(btn.dataset.country);
+    function setLoading(isLoading) {
+      loadingSpinner.style.display = isLoading ? 'block' : 'none';
+    }
 
-      if (savePlace(countryData)) {
-        btn.textContent = '✓ Saved to Bucket List';
-        btn.classList.add('saved');
-        btn.removeEventListener('click', handleSaveClick);
-      }
+    function hideError() {
+      errorMessage.style.display = 'none';
+    }
+
+    function showError(message) {
+      errorMessage.style.display = 'block';
+      errorMessage.textContent = message;
     }
 
     async function fetchAllCountries() {
       setLoading(true);
       hideError();
-      
       try {
         const response = await fetch(`${API_BASE_URL}/all`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
-        currentData = data;
-        displayCountries(data);
-        
+        currentData = data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+        displayCountries(currentData);
+        if (countryCountSpan) countryCountSpan.textContent = currentData.length;
       } catch (error) {
-        console.error('Error fetching countries:', error);
-        showError('Failed to fetch destinations. Please check your internet connection.');
+        showError('Unable to fetch destinations. Please check your internet connection and try again.');
       } finally {
         setLoading(false);
       }
@@ -292,35 +845,24 @@
 
     async function searchCountry(name) {
       if (!name.trim()) {
-        showError('Please enter a country name');
+        showError('Please enter a country name to explore');
         return;
       }
-
       setLoading(true);
       hideError();
-      
       try {
         const response = await fetch(`${API_BASE_URL}/name/${encodeURIComponent(name)}`);
-        
         if (response.status === 404) {
-          if (noResults) {
-            noResults.style.display = 'block';
-          }
-          clearResults();
+          noResults.style.display = 'block';
+          resultsContainer.innerHTML = '';
           return;
         }
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         currentData = data;
         displayCountries(data);
-        
       } catch (error) {
-        console.error('Error searching country:', error);
-        showError('Failed to search for destination. Please try again.');
+        showError('Unable to search for destination. Please try again with a different country name.');
       } finally {
         setLoading(false);
       }
@@ -329,70 +871,51 @@
     async function filterByRegion(region) {
       setLoading(true);
       hideError();
-      
       try {
         const response = await fetch(`${API_BASE_URL}/region/${region}`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
-        currentData = data;
+        currentData = data.sort((a, b) => a.name.common.localeCompare(b.name.common));
         displayCountries(data);
-        
       } catch (error) {
-        console.error('Error filtering by region:', error);
-        showError('Failed to filter destinations by region.');
+        showError('Unable to filter destinations by region.');
       } finally {
         setLoading(false);
       }
     }
 
-    if (searchBtn) {
-      searchBtn.addEventListener('click', () => {
-        const searchTerm = countryInput.value.trim();
-        if (searchTerm) {
-          searchCountry(searchTerm);
-          filterButtons.forEach(btn => btn.classList.remove('active'));
-        }
-      });
-    }
+    // Event Listeners
+    searchBtn.addEventListener('click', () => {
+      const searchTerm = countryInput.value.trim();
+      if (searchTerm) {
+        searchCountry(searchTerm);
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+      }
+    });
 
-    if (countryInput) {
-      countryInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && searchBtn) {
-          searchBtn.click();
-        }
-      });
-    }
+    countryInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') searchBtn.click();
+    });
 
     filterButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const region = btn.dataset.region;
-        
         filterButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        
         if (region) {
           filterByRegion(region);
-          if (countryInput) {
-            countryInput.value = '';
-          }
+          countryInput.value = '';
         }
       });
     });
 
-    if (resetBtn) {
-      resetBtn.addEventListener('click', () => {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        if (countryInput) {
-          countryInput.value = '';
-        }
-        fetchAllCountries();
-      });
-    }
+    resetBtn.addEventListener('click', () => {
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      countryInput.value = '';
+      fetchAllCountries();
+    });
 
+    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       fetchAllCountries();
       updateSavedCount();

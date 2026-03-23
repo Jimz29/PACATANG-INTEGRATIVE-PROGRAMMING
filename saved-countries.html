@@ -6,6 +6,154 @@
   <title>My Bucket List | WORLD TRAVEL</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .bucket-tabs {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #e9ecef;
+      padding-bottom: 1rem;
+    }
+    
+    .tab-btn {
+      padding: 0.8rem 2rem;
+      background: #f8f9fa;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      color: #666;
+    }
+    
+    .tab-btn.active {
+      background: linear-gradient(90deg, #00b4d8, #ff9e00);
+      color: white;
+    }
+    
+    .tab-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .attraction-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .attraction-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .attraction-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .attraction-info {
+      padding: 1rem;
+    }
+    
+    .attraction-info h4 {
+      color: #023e8a;
+      margin-bottom: 0.3rem;
+      font-size: 1.1rem;
+    }
+    
+    .attraction-country {
+      color: #ff9e00;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    
+    .attraction-country i {
+      margin-right: 0.3rem;
+    }
+    
+    .attraction-category {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 0.2rem 0.6rem;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      color: #ff9e00;
+      margin-bottom: 0.5rem;
+    }
+    
+    .attraction-info p {
+      color: #666;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    
+    .attraction-details {
+      font-size: 0.75rem;
+      color: #00b4d8;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #e9ecef;
+    }
+    
+    .delete-attraction-btn {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.8rem;
+      background: #ff6b6b;
+      border: none;
+      border-radius: 25px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .delete-attraction-btn:hover {
+      background: #c92a2a;
+    }
+    
+    .saved-countries-section, .saved-attractions-section {
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .stats-badge {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 12px;
+    }
+    
+    .stats-badge span {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff9e00;
+    }
+    
+    .country-card {
+      cursor: default;
+    }
+    
+    .country-card .delete-btn {
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
 
@@ -23,23 +171,36 @@
   <!-- MAIN CONTENT -->
   <main class="saved-container">
     <h2 class="page-title"><i class="fas fa-suitcase"></i> My Travel Bucket List</h2>
+    
+    <div class="stats-badge">
+      <i class="fas fa-map-marked-alt"></i> Total Saved: <span id="totalSaved">0</span> items
+    </div>
+    
+    <div class="bucket-tabs">
+      <button class="tab-btn active" data-tab="countries">🌍 Countries (<span id="countriesCount">0</span>)</button>
+      <button class="tab-btn" data-tab="attractions">🏝️ Attractions (<span id="attractionsCount">0</span>)</button>
+    </div>
 
-    <!-- RESULTS SECTION -->
-    <div id="resultsContainer" class="results-grid">
-      <!-- Saved countries will be dynamically inserted here -->
+    <!-- COUNTRIES SECTION -->
+    <div id="countriesSection" class="saved-countries-section">
+      <div id="countriesContainer" class="results-grid">
+        <!-- Saved countries will be dynamically inserted here -->
+      </div>
+    </div>
+
+    <!-- ATTRACTIONS SECTION -->
+    <div id="attractionsSection" class="saved-attractions-section" style="display: none;">
+      <div id="attractionsContainer" class="results-grid">
+        <!-- Saved attractions will be dynamically inserted here -->
+      </div>
     </div>
 
     <!-- EMPTY STATE -->
     <div id="emptyState" class="empty-state" style="display: none;">
       <h3><i class="fas fa-map-marked-alt"></i> Your Bucket List is Empty</h3>
-      <p>Start exploring countries and add your dream destinations!</p>
+      <p>Start exploring countries and add your dream destinations or specific attractions!</p>
       <a href="api.html" class="explore-btn"><i class="fas fa-compass"></i> Explore Destinations</a>
     </div>
-
-    <!-- CLEAR ALL BUTTON -->
-    <button id="clearAllBtn" class="clear-all" style="display: none;">
-      <i class="fas fa-trash"></i> Clear All Places
-    </button>
   </main>
 
   <footer>
@@ -48,9 +209,18 @@
 
   <script>
     const STORAGE_KEY = 'WORLD_TRAVEL_SAVED_PLACES';
-    const resultsContainer = document.getElementById('resultsContainer');
+    const ATTRACTIONS_STORAGE_KEY = 'WORLD_TRAVEL_SAVED_ATTRACTIONS';
+    
+    const countriesContainer = document.getElementById('countriesContainer');
+    const attractionsContainer = document.getElementById('attractionsContainer');
+    const countriesSection = document.getElementById('countriesSection');
+    const attractionsSection = document.getElementById('attractionsSection');
     const emptyState = document.getElementById('emptyState');
-    const clearAllBtn = document.getElementById('clearAllBtn');
+    const totalSavedSpan = document.getElementById('totalSaved');
+    const countriesCountSpan = document.getElementById('countriesCount');
+    const attractionsCountSpan = document.getElementById('attractionsCount');
+    
+    let currentTab = 'countries';
 
     function showToast(message) {
       const existingToast = document.querySelector('.toast');
@@ -73,39 +243,53 @@
       return saved ? JSON.parse(saved) : [];
     }
 
+    function getSavedAttractions() {
+      const saved = localStorage.getItem(ATTRACTIONS_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    }
+
     function savePlaces(places) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(places));
     }
 
-    function deletePlace(placeName) {
+    function saveAttractions(attractions) {
+      localStorage.setItem(ATTRACTIONS_STORAGE_KEY, JSON.stringify(attractions));
+    }
+
+    function deleteCountry(placeName) {
       const saved = getSavedPlaces();
       const filtered = saved.filter(c => c.name !== placeName);
       savePlaces(filtered);
-      displaySavedPlaces();
+      displaySavedCountries();
       showToast('🗑️ Destination removed from bucket list!');
     }
 
-    function clearAllPlaces() {
-      if (confirm('Are you sure you want to clear your entire bucket list?')) {
-        localStorage.removeItem(STORAGE_KEY);
-        displaySavedPlaces();
-        showToast('🗑️ All destinations cleared!');
-      }
+    function deleteAttraction(attractionName, countryName) {
+      const saved = getSavedAttractions();
+      const filtered = saved.filter(a => !(a.name === attractionName && a.country === countryName));
+      saveAttractions(filtered);
+      displaySavedAttractions();
+      showToast(`🗑️ "${attractionName}" removed from bucket list!`);
     }
 
-    function displaySavedPlaces() {
+    function displaySavedCountries() {
       const saved = getSavedPlaces();
       
-      resultsContainer.innerHTML = '';
+      if (saved.length === 0 && getSavedAttractions().length === 0) {
+        emptyState.style.display = 'block';
+      } else {
+        emptyState.style.display = 'none';
+      }
+      
+      countriesCountSpan.textContent = saved.length;
+      totalSavedSpan.textContent = saved.length + getSavedAttractions().length;
+      
+      countriesContainer.innerHTML = '';
 
       if (saved.length === 0) {
-        emptyState.style.display = 'block';
-        clearAllBtn.style.display = 'none';
+        countriesContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;">No countries saved yet. Explore and add your dream destinations!</div>';
         return;
       }
-
-      emptyState.style.display = 'none';
-      clearAllBtn.style.display = 'block';
 
       saved.forEach(place => {
         const card = document.createElement('div');
@@ -117,28 +301,110 @@
           <p class="country-detail"><strong>Capital:</strong> ${place.capital}</p>
           <p class="country-detail"><strong>Region:</strong> ${place.region}</p>
           <p class="country-detail"><strong>Population:</strong> ${place.population}</p>
-          <p class="country-detail"><strong>Languages:</strong> ${place.languages}</p>
           <button class="delete-btn" data-place="${place.name}">
             <i class="fas fa-times"></i> Remove from List
           </button>
         `;
 
-        resultsContainer.appendChild(card);
+        countriesContainer.appendChild(card);
       });
 
-      document.querySelectorAll('.delete-btn').forEach(btn => {
+      document.querySelectorAll('#countriesContainer .delete-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const placeName = e.target.closest('.delete-btn').dataset.place;
-          deletePlace(placeName);
+          deleteCountry(placeName);
         });
       });
     }
 
-    if (clearAllBtn) {
-      clearAllBtn.addEventListener('click', clearAllPlaces);
+    function displaySavedAttractions() {
+      const saved = getSavedAttractions();
+      
+      attractionsCountSpan.textContent = saved.length;
+      totalSavedSpan.textContent = getSavedPlaces().length + saved.length;
+      
+      attractionsContainer.innerHTML = '';
+
+      if (saved.length === 0) {
+        attractionsContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;">No attractions saved yet. Click on any country and add specific attractions to your bucket list!</div>';
+        return;
+      }
+
+      saved.forEach(attraction => {
+        const card = document.createElement('div');
+        card.className = 'attraction-card';
+
+        let detailsHtml = '';
+        if (attraction.bestTime) {
+          detailsHtml += `<div class="attraction-details"><i class="fas fa-calendar"></i> Best time: ${attraction.bestTime}</div>`;
+        }
+        if (attraction.activities) {
+          detailsHtml += `<div class="attraction-details"><i class="fas fa-hiking"></i> Activities: ${attraction.activities}</div>`;
+        }
+
+        card.innerHTML = `
+          <img src="${attraction.image}" alt="${attraction.name}" class="attraction-image" onerror="this.src='https://via.placeholder.com/500x300?text=${encodeURIComponent(attraction.name)}'">
+          <div class="attraction-info">
+            <h4>${attraction.name}</h4>
+            <div class="attraction-country">
+              <i class="fas fa-map-marker-alt"></i> ${attraction.country}
+            </div>
+            <span class="attraction-category"><i class="fas fa-tag"></i> ${attraction.category || 'Tourist Spot'}</span>
+            <p>${attraction.description.substring(0, 120)}${attraction.description.length > 120 ? '...' : ''}</p>
+            ${detailsHtml}
+            <button class="delete-attraction-btn" data-name="${attraction.name.replace(/'/g, "\\'")}" data-country="${attraction.country.replace(/'/g, "\\'")}">
+              <i class="fas fa-times"></i> Remove from List
+            </button>
+          </div>
+        `;
+
+        attractionsContainer.appendChild(card);
+      });
+
+      document.querySelectorAll('.delete-attraction-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const name = btn.dataset.name;
+          const country = btn.dataset.country;
+          deleteAttraction(name, country);
+        });
+      });
     }
 
-    document.addEventListener('DOMContentLoaded', displaySavedPlaces);
+    // Tab switching
+    function switchTab(tab) {
+      currentTab = tab;
+      
+      if (tab === 'countries') {
+        countriesSection.style.display = 'block';
+        attractionsSection.style.display = 'none';
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector('.tab-btn[data-tab="countries"]').classList.add('active');
+        displaySavedCountries();
+      } else {
+        countriesSection.style.display = 'none';
+        attractionsSection.style.display = 'block';
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector('.tab-btn[data-tab="attractions"]').classList.add('active');
+        displaySavedAttractions();
+      }
+    }
+
+    // Initialize
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        switchTab(tab);
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      displaySavedCountries();
+      displaySavedAttractions();
+      
+      if (getSavedPlaces().length === 0 && getSavedAttractions().length === 0) {
+        emptyState.style.display = 'block';
+      }
+    });
   </script>
 </body>
 </html>
